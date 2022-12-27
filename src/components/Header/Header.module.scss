@@ -1,0 +1,172 @@
+.header {
+	padding-top: 0.625rem;
+	background-color: #f8f8f8;
+}
+
+.pages {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.3125rem;
+	padding-bottom: 0.75rem;
+}
+
+.pagesList {
+	display: flex;
+	align-items: center;
+	gap: 3.5625rem;
+}
+
+.item {
+	font-weight: 400;
+	font-size: 0.875rem;
+	line-height: 1.0625rem;
+
+	color: #8291a3;
+	transition: all 0.3s;
+
+	&.active {
+		position: relative;
+		color: #1e2123;
+
+		svg path {
+			fill: #1e2123;
+		}
+		&::before {
+			content: '';
+			width: 100%;
+			height: 2px;
+			background-color: #ffd54f;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+		}
+	}
+
+	svg path {
+		transition: all 0.3s;
+	}
+
+	&:hover {
+		color: #1e2123;
+
+		svg path {
+			fill: #1e2123;
+		}
+	}
+}
+
+.bookmarksLink,
+.declarationLink {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+}
+
+.right {
+	display: flex;
+	align-items: center;
+	gap: 2.5rem;
+	padding-bottom: 0.75rem;
+}
+
+.bookmarksLink {
+	color: #8291a3;
+	font-weight: 500;
+	font-size: 0.875rem;
+	line-height: 1.0625rem;
+	transition: all 0.3s;
+
+	svg,
+	path {
+		transition: all 0.3s;
+	}
+
+	&:hover {
+		color: #1e2123;
+
+		svg {
+			fill: #1e2123;
+
+			path:last-child {
+				stroke: #1e2123;
+			}
+		}
+	}
+}
+
+.loginLink {
+	font-weight: 500;
+	color: #664ef9;
+	font-size: 0.875rem;
+	line-height: 1.0625rem;
+	transition: all 0.3s;
+}
+
+.declaration {
+	background: #ffffff;
+	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.declarationWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.declarationList {
+	display: flex;
+	align-items: center;
+	gap: 5rem;
+}
+
+.declarationItem {
+	color: #1e2123;
+	font-weight: 600;
+}
+
+.active,
+.active {
+	position: relative;
+	color: #1e2123;
+
+	svg path {
+		fill: #1e2123;
+	}
+	&::before {
+		content: '';
+		width: 100%;
+		height: 2px;
+		background-color: #ffd54f;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}
+}
+
+.declarationLink {
+	gap: 0.9375rem;
+	padding: 1.375rem 0;
+	transition: all 0.3s;
+}
+
+.button {
+	cursor: pointer;
+	background: linear-gradient(90deg, #9d94ff 0%, #6b50e9 94.5%);
+	border-radius: 19px;
+	border: none;
+	padding: 0.625rem 1.125rem;
+	color: #fff;
+	font-weight: 700;
+	transition: all 0.3s;
+
+	&:hover {
+		background: linear-gradient(90deg, #867cfc 0%, #6929f3 94.5%);
+	}
+}

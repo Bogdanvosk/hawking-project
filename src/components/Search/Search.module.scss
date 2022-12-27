@@ -1,0 +1,42 @@
+.container {
+	position: relative;
+	flex: 0 1 47%;
+
+	@media (max-width: 600px) {
+		width: 100%;
+	}
+}
+
+.input {
+	outline: none;
+	background: #ffffff;
+	box-shadow: 0px 10px 20px rgba(0, 96, 206, 0.05);
+	border-radius: 20px;
+	border: none;
+	padding: 0.6875rem 1.25rem;
+	width: 100%;
+
+	font-weight: 500;
+	font-size: 0.875rem;
+	line-height: 1.0625rem;
+
+	&::placeholder {
+		font-weight: 500;
+		font-size: 0.875rem;
+		line-height: 1.0625rem;
+	}
+}
+
+.button {
+	position: absolute;
+	right: 0;
+	top: 0;
+	cursor: pointer;
+	background: #664ef9;
+	border-radius: 19px;
+	border: none;
+	padding: 0.625rem 1.125rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

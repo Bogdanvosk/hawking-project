@@ -1,0 +1,23 @@
+.breadcrumbs {
+	display: flex;
+	align-items: center;
+	gap: 0.4375rem;
+	padding-top: 3rem;
+}
+
+.circle {
+	display: inline-block;
+	width: 3px;
+	height: 3px;
+	background-color: #664ef9;
+	border-radius: 50%;
+}
+
+.item {
+	font-size: .875rem;
+	line-height: .875rem;
+
+	&:last-child {
+		color: #686868;
+	}
+}
