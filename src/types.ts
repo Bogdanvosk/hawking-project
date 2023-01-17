@@ -26,3 +26,10 @@ export type TCard = {
 export type TNewsProps = {
 	itemsPerPage: number
 }
+
+export type TModalProps = {
+	setIsModalOpen: (state: boolean) => void
+	title: string
+	text: string
+	buttonText: string
+}

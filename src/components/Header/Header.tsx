@@ -99,9 +99,9 @@ const Header = () => {
 							</a>
 						</div>
 						<div className={styles.login}>
-							<a href='#' className={styles.loginLink}>
+							<Link to='/auth' className={styles.loginLink}>
 								Вход и регистрация
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>

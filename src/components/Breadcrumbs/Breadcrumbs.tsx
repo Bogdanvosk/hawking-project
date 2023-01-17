@@ -1,36 +1,32 @@
 import { useEffect } from 'react'
-import { useMatches } from 'react-router-dom'
-import useReactRouterBreadcrumbs from 'use-react-router-breadcrumbs'
+
+import { Link, useLocation, useMatches } from 'react-router-dom'
 import breadcrumbsIcon from '../../assets/icons/breadcrumbs-icon.svg'
 import Container from '../Container/Container'
 
 import styles from './Breadcrumbs.module.scss'
 
 const Breadcrumbs = () => {
-	const matches = useMatches()
+	let matches = useMatches()
+	// console.log(matches)
 
-	const title = matches[0].pathname.split('/')[1]
-	const id = matches[0].pathname.split('/')[2]
-
-	const handleTitle = () => {
-		switch (title) {
-			case "news":
-				return "Новости"
-			
-			default:
-				break;
-		}
-	}
+	// let crumbs = matches
+	// 	// first get rid of any matches that don't have handle and crumb
+	// 	.filter(match => Boolean(match.handle?.crumb))
+	// // 	// now map them into an array of elements, passing the loader
+	// // 	// data to each one
+	// 	.map(match => match.handle?.crumb(match.data))
 
 	return (
 		<Container>
 			<div className={styles.breadcrumbs}>
-				<img src={breadcrumbsIcon} alt='' />
+				<Link to='/'>
+					<img src={breadcrumbsIcon} alt='' />
+				</Link>
 				<span className={styles.circle}></span>
 
 				<ul className={styles.list}>
-					{/* {breadcrumbs.map(({ breadcrumb }) => breadcrumb)} */}
-					<li className={styles.item}>{handleTitle()}</li>
+					{/* <li className={styles.item}>{}</li> */}
 				</ul>
 			</div>
 		</Container>

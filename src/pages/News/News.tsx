@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
+import { useSearchParams } from 'react-router-dom'
 import {
 	Breadcrumbs,
 	Cards,
@@ -14,15 +15,34 @@ import { TCard, TNewsProps } from '../../types'
 import styles from './News.module.scss'
 
 const News = ({ itemsPerPage }: TNewsProps) => {
+	let [searchParams, setSearchParams] = useSearchParams()
+
 	const [news, setNews] = useState<TCard[]>([])
+	const [searchParam, setSearchParam] = useState<string>('')
 
 	useEffect(() => {
+		const paramValue = searchParams.get('search')
+
+		if (paramValue) {
+			setSearchParam(paramValue)
+		}
+
 		axios
 			.get('http://localhost:3000/news')
 			.then(({ data }) => setNews(data))
 	}, [])
 
+	useEffect(() => {
+		axios
+			.get(`http://localhost:3000/news?q=${searchParam}`)
+			.then(({ data }) => setNews(data))
+
+		setSearchParams(`search=${searchParam}`)
+	}, [searchParam])
+
 	const [itemOffset, setItemOffset] = useState(0)
+
+	if (news.length < itemsPerPage) itemsPerPage = news.length
 
 	const endOffset = itemOffset + itemsPerPage
 	const currentNews = news.slice(itemOffset, endOffset)
@@ -31,16 +51,24 @@ const News = ({ itemsPerPage }: TNewsProps) => {
 	const handlePageClick = (event: { selected: number }) => {
 		const newOffset = (event.selected * itemsPerPage) % news.length
 		setItemOffset(newOffset)
+
+		executeScroll()
 	}
+
+	const executeScroll = () =>
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		})
 
 	return (
 		<Layout>
-			<Container>
-				<div className={styles.news}>
+			<div className={styles.news}>
+				<Container>
 					<Breadcrumbs />
 					<div className={styles.newsHead}>
 						<Title size={30}>Новости</Title>
-						<Search />
+						<Search setSearchParam={setSearchParam} />
 					</div>
 					<Cards news={currentNews} />
 					<ReactPaginate
@@ -54,8 +82,8 @@ const News = ({ itemsPerPage }: TNewsProps) => {
 						pageCount={pageCount}
 						previousLabel={null}
 					/>
-				</div>
-			</Container>
+				</Container>
+			</div>
 		</Layout>
 	)
 }

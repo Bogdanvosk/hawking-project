@@ -1,2 +1,6 @@
 export { default as News } from './News/News'
 export { default as NewsItem } from './NewsItem/NewsItem'
+export { default as NotFound } from './NotFound/NotFound'
+export { default as Contacts } from './Contacts/Contacts'
+export { default as Auth } from './Auth/Auth'
+export { default as Catalog } from './Catalog/Catalog'
