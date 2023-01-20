@@ -34,26 +34,3 @@
 		}
 	}
 }
-
-.paginate {
-	&Container {
-		display: flex;
-		margin-top: 5rem;
-		gap: 0.1875rem;
-	}
-
-	&Link {
-		cursor: pointer;
-		font-weight: 400;
-		font-size: 1.125rem;
-		line-height: 1.375rem;
-		padding: 0 0.3125rem;
-		color: #686868;
-	}
-
-	&ActiveLink {
-		color: #000000;
-		font-weight: 700;
-		border-bottom: 2px solid #FFD54F;
-	}
-}

@@ -115,13 +115,13 @@ const Header = () => {
 						<ul className={styles.declarationList}>
 							<li className={styles.declarationItem}>
 								<NavLink
-									to='/flats'
+									to='/catalog'
 									className={({ isActive }) =>
 										isActive
 											? `${styles.declarationLink} ${styles.active}`
 											: styles.declarationLink
 									}>
-									<span>Квартиры на сутки</span>
+									<span>Квартиры в Минске</span>
 									<img src={locationSvg} alt='' />
 								</NavLink>
 							</li>

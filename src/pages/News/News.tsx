@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import ReactPaginate from 'react-paginate'
 import { useSearchParams } from 'react-router-dom'
 import {
 	Breadcrumbs,
@@ -8,13 +7,14 @@ import {
 	Container,
 	Layout,
 	Search,
-	Title
+	Title,
+	Pagination
 } from '../../components'
-import { TCard, TNewsProps } from '../../types'
+import { TCard, TComponentWithPagination } from '../../types'
 
 import styles from './News.module.scss'
 
-const News = ({ itemsPerPage }: TNewsProps) => {
+const News = ({ itemsPerPage }: TComponentWithPagination) => {
 	let [searchParams, setSearchParams] = useSearchParams()
 
 	const [news, setNews] = useState<TCard[]>([])
@@ -71,16 +71,9 @@ const News = ({ itemsPerPage }: TNewsProps) => {
 						<Search setSearchParam={setSearchParam} />
 					</div>
 					<Cards news={currentNews} />
-					<ReactPaginate
-						className={styles.paginateContainer}
-						pageLinkClassName={styles.paginateLink}
-						activeLinkClassName={styles.paginateActiveLink}
-						breakLabel='...'
-						nextLabel={null}
-						onPageChange={handlePageClick}
-						pageRangeDisplayed={5}
+					<Pagination
 						pageCount={pageCount}
-						previousLabel={null}
+						handlePageClick={handlePageClick}
 					/>
 				</Container>
 			</div>

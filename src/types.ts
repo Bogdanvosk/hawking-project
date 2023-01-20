@@ -23,7 +23,7 @@ export type TCard = {
 	date: string
 }
 
-export type TNewsProps = {
+export type TComponentWithPagination = {
 	itemsPerPage: number
 }
 
@@ -32,4 +32,42 @@ export type TModalProps = {
 	title: string
 	text: string
 	buttonText: string
+}
+
+export type TFlatProps = {
+	id?: number
+	img: string
+	price: number
+	roomsCount: number
+	bedroomCount: number
+	address: TAddress
+	stuff: string[]
+	owner: TOwner
+}
+
+type TAddress = {
+	city: string
+	street: string
+	number: number
+	subway: string
+	district: string
+}
+
+type TOwner = {
+	name: string
+	img: string
+	phoneNumber: string
+	links: TLinks
+}
+
+type TLinks = {
+	website: string
+	vk: string
+	telegram: string
+	email: string
+}
+
+export type TPaginationProps = {
+	pageCount: number
+	handlePageClick: (event: { selected: number }) => void
 }

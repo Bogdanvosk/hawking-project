@@ -34,7 +34,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/catalog',
-		element: <Catalog />
+		element: <Catalog itemsPerPage={6} />
 	}
 ])
 
