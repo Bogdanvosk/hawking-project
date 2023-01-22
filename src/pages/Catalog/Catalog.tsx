@@ -5,14 +5,21 @@ import {
 	Container,
 	Layout,
 	Flat,
-	Pagination
+	Pagination,
+	Sort,
+	Flats
 } from '../../components'
 import { TComponentWithPagination, TFlatProps } from '../../types'
 
 import styles from './Catalog.module.scss'
 
+type TViewMode = 'Список' | 'Плитки'
+
 const Catalog = ({ itemsPerPage }: TComponentWithPagination) => {
+	// todo: РАЗБИТЬ НА КОМПОНЕНТЫ
 	const [flats, setFlats] = useState<TFlatProps[]>([])
+
+	const [viewMode, setViewMode] = useState<TViewMode>('Список')
 
 	const [itemOffset, setItemOffset] = useState(0)
 
@@ -34,6 +41,10 @@ const Catalog = ({ itemsPerPage }: TComponentWithPagination) => {
 			top: 0,
 			behavior: 'smooth'
 		})
+
+	const handleViewButtonClick = (viewMode: TViewMode) => {
+		setViewMode(viewMode)
+	}
 
 	useEffect(() => {
 		axios
@@ -57,27 +68,143 @@ const Catalog = ({ itemsPerPage }: TComponentWithPagination) => {
 				</Container>
 			</div>
 			<Container>
+				<div className={styles.sortContainer}>
+					<div className={styles.sortSelect}>
+						<Sort />
+					</div>
+					<div className={styles.right}>
+						<div className={styles.viewButtons}>
+							<button
+								className={`${styles.viewButton} ${
+									viewMode === 'Список' ? styles.active : ''
+								}`}
+								onClick={() => handleViewButtonClick('Список')}>
+								<svg
+									width='15'
+									height='15'
+									viewBox='0 0 15 15'
+									fill='none'
+									xmlns='http://www.w3.org/2000/svg'>
+									<rect
+										y='0.5'
+										width='14.5036'
+										height='3.22302'
+										rx='1'
+										fill={
+											viewMode === 'Список'
+												? '#664ef9'
+												: '#bdbdbd'
+										}
+									/>
+									<rect
+										y='11.2773'
+										width='14.5036'
+										height='3.22302'
+										rx='1'
+										fill={
+											viewMode === 'Список'
+												? '#664ef9'
+												: '#bdbdbd'
+										}
+									/>
+									<rect
+										y='5.88867'
+										width='14.5036'
+										height='3.22302'
+										rx='1'
+										fill={
+											viewMode === 'Список'
+												? '#664ef9'
+												: '#bdbdbd'
+										}
+									/>
+								</svg>
+								<span>Список</span>
+							</button>
+							<button
+								className={`${styles.viewButton} ${
+									viewMode === 'Плитки' ? styles.active : ''
+								}`}
+								onClick={() => handleViewButtonClick('Плитки')}>
+								<svg
+									width='15'
+									height='14'
+									viewBox='0 0 15 14'
+									fill='none'
+									xmlns='http://www.w3.org/2000/svg'>
+									<rect
+										x='0.00390625'
+										width='5.44444'
+										height='5.44444'
+										rx='1'
+										fill={
+											viewMode === 'Плитки'
+												? '#664ef9'
+												: '#bdbdbd'
+										}
+									/>
+									<rect
+										x='0.00390625'
+										y='8.55469'
+										width='5.44444'
+										height='5.44444'
+										rx='1'
+										fill={
+											viewMode === 'Плитки'
+												? '#664ef9'
+												: '#bdbdbd'
+										}
+									/>
+									<rect
+										x='8.55957'
+										width='5.44444'
+										height='5.44444'
+										rx='1'
+										fill={
+											viewMode === 'Плитки'
+												? '#664ef9'
+												: '#bdbdbd'
+										}
+									/>
+									<rect
+										x='8.55957'
+										y='8.55469'
+										width='5.44444'
+										height='5.44444'
+										rx='1'
+										fill={
+											viewMode === 'Плитки'
+												? '#664ef9'
+												: '#bdbdbd'
+										}
+									/>
+								</svg>
+								<span>Плитки</span>
+							</button>
+						</div>
+						<button className={styles.button}>
+							<svg
+								width='12'
+								height='14'
+								viewBox='0 0 12 14'
+								fill='none'
+								xmlns='http://www.w3.org/2000/svg'>
+								<path
+									d='M10.2731 2.44186C9.24757 0.87907 7.55454 0 5.64989 0C3.76152 0 2.0685 0.87907 1.01036 2.44186C-0.0477828 3.97209 -0.291969 5.92558 0.359194 7.63488C0.538264 8.0907 0.815008 8.56279 1.17315 8.98605L5.29175 13.8372C5.38943 13.9349 5.4871 14 5.63361 14C5.78012 14 5.8778 13.9349 5.97547 13.8372L10.1104 8.98605C10.4685 8.56279 10.7615 8.10698 10.9243 7.63488C11.5755 5.92558 11.3313 3.97209 10.2731 2.44186ZM5.64989 8.20465C4.24989 8.20465 3.09408 7.04884 3.09408 5.64884C3.09408 4.24884 4.24989 3.09302 5.64989 3.09302C7.04989 3.09302 8.2057 4.24884 8.2057 5.64884C8.2057 7.04884 7.06617 8.20465 5.64989 8.20465Z'
+									fill='#664EF9'
+								/>
+							</svg>
+							Открыть карту
+						</button>
+					</div>
+				</div>
+			</Container>
+			<Container>
 				<div className={styles.flats}>
 					<h2 className={styles.found}>
 						Найдено {flats.length} квартир
 					</h2>
-					<div className={styles.cards}>
-						{currentFlats &&
-							currentFlats.map(flat => {
-								return (
-									<Flat
-										address={flat.address}
-										bedroomCount={flat.bedroomCount}
-										img={flat.img}
-										owner={flat.owner}
-										price={flat.price}
-										roomsCount={flat.roomsCount}
-										stuff={flat.stuff}
-										key={flat.id}
-									/>
-								)
-							})}
-					</div>
+					<Flats flats={currentFlats} />
 					<div className={styles.row}>
 						<Pagination
 							pageCount={pageCount}
@@ -286,6 +413,53 @@ const Catalog = ({ itemsPerPage }: TComponentWithPagination) => {
 					</div>
 				</div>
 			</Container>
+			<div className={styles.map}>
+				<Container>
+					<h3 className={styles.mapTitle}>
+						Показать найденные квартиры на карте
+					</h3>
+					<p className={styles.mapSubtitle}>
+						Ищите новостройки рядом с работой, парком или
+						родственниками
+					</p>
+					<button className={styles.mapButton}>
+						<svg
+							width='15'
+							height='16'
+							viewBox='0 0 15 16'
+							fill='none'
+							xmlns='http://www.w3.org/2000/svg'>
+							<g clipPath='url(#clip0_2831_2727)'>
+								<path
+									d='M12.462 2.71394C11.3632 1.03952 9.54923 0.0976563 7.50853 0.0976562C5.48528 0.0976562 3.67132 1.03952 2.5376 2.71394C1.40388 4.35347 1.14225 6.44649 1.83993 8.27789C2.03179 8.76626 2.3283 9.27207 2.71202 9.72556L7.12481 14.9232C7.22946 15.0279 7.33412 15.0977 7.49109 15.0977C7.64807 15.0977 7.75272 15.0279 7.85737 14.9232L12.2876 9.72556C12.6713 9.27207 12.9853 8.7837 13.1597 8.27789C13.8574 6.44649 13.5957 4.35347 12.462 2.71394ZM7.50853 8.88835C6.00853 8.88835 4.77016 7.64998 4.77016 6.14998C4.77016 4.64998 6.00853 3.41161 7.50853 3.41161C9.00853 3.41161 10.2469 4.64998 10.2469 6.14998C10.2469 7.64998 9.02598 8.88835 7.50853 8.88835Z'
+									fill='url(#paint0_linear_2831_2727)'
+								/>
+							</g>
+							<defs>
+								<linearGradient
+									id='paint0_linear_2831_2727'
+									x1='1.45508'
+									y1='0.847657'
+									x2='15.7623'
+									y2='4.16693'
+									gradientUnits='userSpaceOnUse'>
+									<stop stopColor='#FFD54F' />
+									<stop offset='1' stopColor='#FEC100' />
+								</linearGradient>
+								<clipPath id='clip0_2831_2727'>
+									<rect
+										width='15'
+										height='15'
+										fill='white'
+										transform='translate(0 0.0976562)'
+									/>
+								</clipPath>
+							</defs>
+						</svg>
+						Открыть карту
+					</button>
+				</Container>
+			</div>
 		</Layout>
 	)
 }

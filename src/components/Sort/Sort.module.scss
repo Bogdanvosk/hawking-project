@@ -1,0 +1,72 @@
+.sort {
+	&Container {
+		position: relative;
+	}
+
+	&Label {
+		margin-top: 20px;
+		cursor: pointer;
+		background: #ffffff;
+		box-shadow: 0px 5px 20px rgba(0, 96, 206, 0.1);
+		border-radius: 18px;
+		padding: 0.5rem 0.625rem;
+		display: flex;
+		align-items: center;
+		gap: 3.875rem;
+
+		.sortIcon {
+			vertical-align: middle;
+
+			g,
+			path {
+				transition: all 0.3s;
+			}
+		}
+
+		span {
+			font-weight: 600;
+			font-size: 0.875rem;
+			line-height: 1.0625rem;
+			color: #1e2123;
+			vertical-align: middle;
+			margin-left: 0.625rem;
+		}
+
+		.sortArrow {
+			margin-left: auto;
+			transition: all 0.3s;
+		}
+
+		.rotated {
+			transform: rotate(180deg);
+		}
+	}
+	&Select {
+		width: 100%;
+		position: absolute;
+		top: 46px;
+		left: 0;
+		background: #ffffff;
+		box-shadow: 0px 0px 40px rgba(39, 95, 158, 0.1);
+		border-radius: 10px;
+		z-index: 1;
+		opacity: 0;
+		pointer-events: none;
+		transition: all 0.3s;
+
+		li {
+			cursor: pointer;
+			padding: 0.625rem 0.9375rem;
+			transition: all 0.3s;
+
+			&:hover {
+				background: #f8f8f8;
+			}
+		}
+	}
+}
+
+.show {
+	opacity: 1;
+	pointer-events: all;
+}

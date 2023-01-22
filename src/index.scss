@@ -9,8 +9,12 @@ body {
 	background-color: #fff;
 	overflow-x: hidden;
 }
+button {
+	font-family: inherit;
+}
 
 a {
+	font-family: inherit;
 	text-decoration: none;
 	color: inherit;
 }
@@ -19,4 +23,3 @@ ul,
 li {
 	list-style-type: none;
 }
-
