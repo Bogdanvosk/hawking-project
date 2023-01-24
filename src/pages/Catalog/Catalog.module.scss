@@ -119,68 +119,8 @@
 .sortContainer {
 	display: flex;
 	justify-content: space-between;
-
-	.button {
-		background: #ffffff;
-		box-shadow: 0px 5px 20px rgba(0, 96, 206, 0.1);
-		border-radius: 18px;
-		border: none;
-		padding: 0.625rem 0.9375rem;
-		display: flex;
-		align-items: center;
-		gap: 0.625rem;
-
-		font-weight: 600;
-		font-size: 0.875rem;
-		line-height: 1.0625rem;
-		color: #1e2123;
-
-		cursor: pointer;
-		border: 2px solid transparent;
-		transition: all 0.3s;
-		&:hover {
-			border: 2px solid #664ef9;
-		}
-	}
 }
 
-.viewButtons {
-	display: flex;
-	align-items: center;
-}
-
-.viewButton {
-	cursor: pointer;
-	border: none;
-	padding: 0.625rem 0.9375rem;
-	background-color: transparent;
-	filter: drop-shadow(0px 5px 20px rgba(0, 96, 206, 0.1));
-	border-radius: 18px;
-	font-weight: 500;
-	font-size: 0.875rem;
-	line-height: 1.0625rem;
-	color: #1e2123;
-
-	display: flex;
-	gap: 0.625rem;
-	align-items: center;
-
-	transition: all 0.3s;
-
-	&:hover {
-		background: #f8f8f8;
-	}
-
-	span {
-		font-family: 'Inter', sans-serif;
-	}
-
-	svg rect {
-		transition: all 0.3s;
-	}
-}
-
-.active {
-	background: #ffffff;
-	box-shadow: 0px 5px 20px rgba(0, 96, 206, 0.1);
+.listFlats {
+	width: 100%;
 }

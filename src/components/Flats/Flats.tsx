@@ -1,11 +1,17 @@
-import { TFlatProps } from '../../types'
+import { TFlatProps, TViewMode } from '../../types'
 import Flat from '../Flat/Flat'
 
 import styles from './Flats.module.scss'
 
 const Flats = ({ flats }: { flats: TFlatProps[] }) => {
+	// todo: Убрать
+	const viewMode: TViewMode = 'Список'
+
 	return (
-		<div className={styles.cards}>
+		<div
+			className={`${styles.cards} ${
+				viewMode === 'Список' ? styles.listCards : null
+			}`}>
 			{flats &&
 				flats.map(flat => {
 					return (

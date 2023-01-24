@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { TFlatProps } from '../../types'
+import { TFlatProps, TViewMode } from '../../types'
 
 import styles from './Flat.module.scss'
 
@@ -14,6 +14,9 @@ const Flat = ({
 }: TFlatProps) => {
 	const [contactsIsOpen, setContactsIsOpen] = useState(false)
 
+	// УБРАТЬ
+	const viewMode: TViewMode = 'Список'
+
 	const ref = useRef(null)
 
 	const handleContactsClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -25,8 +28,11 @@ const Flat = ({
 	}
 
 	return (
-		<div className={styles.card}>
-			<span className={styles.gold}>Gold</span>
+		<div
+			className={`${styles.card} ${
+				viewMode === 'Список' ? styles.wideCard : null
+			} `}>
+			{viewMode === 'Плитки' && <span className={styles.gold}>Gold</span>}
 			<div className={styles.slider}>
 				<img src={img} alt='Flat' />
 			</div>
@@ -137,8 +143,14 @@ const Flat = ({
 						</p>
 					</div>
 					<span className={styles.line}></span>
-					<div className={styles.bottom}>
+					<div
+						className={`${styles.bottom} ${
+							viewMode === 'Список' ? styles.wide : null
+						}`}>
 						<div className={styles.addToFav}>
+							{viewMode === 'Список' && (
+								<span>В закладки</span>
+							)}
 							<svg
 								height='15px'
 								width='15px'
@@ -296,7 +308,12 @@ c34.193,0,66.33,13.312,90.513,37.487C498.814,132.387,498.814,213.59,448.911,263.
 							)}
 						</div>
 
-						<div className={styles.more}>Подробнее</div>
+						<div
+							className={`${styles.more} ${
+								viewMode === 'Список' ? styles.wide : null
+							}`}>
+							Подробнее
+						</div>
 					</div>
 				</div>
 			</div>

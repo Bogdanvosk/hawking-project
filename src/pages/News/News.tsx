@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import {
 	Breadcrumbs,
@@ -10,14 +11,20 @@ import {
 	Title,
 	Pagination
 } from '../../components'
-import { TCard, TComponentWithPagination } from '../../types'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { RootState } from '../../store'
+import { fetchNews, getNews } from '../../store/features/news/newsSlice'
+import { TComponentWithPagination } from '../../types'
 
 import styles from './News.module.scss'
 
 const News = ({ itemsPerPage }: TComponentWithPagination) => {
 	let [searchParams, setSearchParams] = useSearchParams()
 
-	const [news, setNews] = useState<TCard[]>([])
+	const { news } = useAppSelector((state: RootState) => state.news)
+	const dispatch = useAppDispatch()
+
+	// const [news, setNews] = useState<TCard[]>([])
 	const [searchParam, setSearchParam] = useState<string>('')
 
 	useEffect(() => {
@@ -27,18 +34,16 @@ const News = ({ itemsPerPage }: TComponentWithPagination) => {
 			setSearchParam(paramValue)
 		}
 
-		axios
-			.get('http://localhost:3000/news')
-			.then(({ data }) => setNews(data))
+		getNews(dispatch<any>(fetchNews()))
 	}, [])
 
-	useEffect(() => {
-		axios
-			.get(`http://localhost:3000/news?q=${searchParam}`)
-			.then(({ data }) => setNews(data))
+	// useEffect(() => {
+	// 	axios
+	// 		.get(`http://localhost:3000/news?q=${searchParam}`)
+	// 		.then(({ data }) => setNews(data))
 
-		setSearchParams(`search=${searchParam}`)
-	}, [searchParam])
+	// 	setSearchParams(`search=${searchParam}`)
+	// }, [searchParam])
 
 	const [itemOffset, setItemOffset] = useState(0)
 

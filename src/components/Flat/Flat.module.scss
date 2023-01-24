@@ -134,7 +134,11 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	align-items: center;
+
+	&.wide {
+		justify-content: start;
+		gap: 0.9375rem;
+	}
 }
 
 .addToFav {
@@ -144,9 +148,24 @@
 	border-radius: 22px;
 	padding: 0.5625rem;
 	transition: 0.3s all;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: .625rem;
 
 	&:hover {
 		background: rgba(235, 87, 87, 0.2);
+	}
+
+	span {
+		font-weight: 600;
+		font-size: 0.875rem;
+		line-height: 1.0625rem;
+		color: #eb5757;
+	}
+
+	&.wide {
+		padding: .5625rem .9375rem;
 	}
 }
 
@@ -207,6 +226,10 @@
 	&:hover {
 		background: rgba(255, 213, 79, 0.3);
 	}
+
+	&.wide {
+		margin-left: auto;
+	}
 }
 
 .avatar {
@@ -262,4 +285,9 @@
 	background: #ffffff;
 	box-shadow: 0px 5px 20px rgba(0, 96, 206, 0.1);
 	border-radius: 18px;
+}
+
+.wideCard {
+	display: flex;
+	max-width: 100%;
 }

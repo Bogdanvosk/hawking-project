@@ -71,3 +71,5 @@ export type TPaginationProps = {
 	pageCount: number
 	handlePageClick: (event: { selected: number }) => void
 }
+
+export type TViewMode = 'Список' | 'Плитки'
