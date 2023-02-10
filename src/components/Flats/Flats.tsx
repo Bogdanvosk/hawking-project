@@ -3,9 +3,7 @@ import Flat from '../Flat/Flat'
 
 import styles from './Flats.module.scss'
 
-const Flats = ({ flats }: { flats: TFlatProps[] }) => {
-	// todo: Убрать
-	const viewMode: TViewMode = 'Список'
+const Flats = ({ flats, viewMode }: { flats: TFlatProps[], viewMode: TViewMode }) => {
 
 	return (
 		<div

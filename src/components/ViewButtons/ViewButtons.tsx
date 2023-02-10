@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import { TViewMode } from '../../types'
 
 import styles from './ViewButtons.module.scss'
+import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
+import { setViewMode } from "../../store/features/catalog/flatsSlice";
 
 const ViewButtons = () => {
-	const [viewMode, setViewMode] = useState<TViewMode>('Список')
+	const { viewMode } = useAppSelector(({ flats }) => flats)
+	const dispatch = useAppDispatch()
 
-	const handleViewButtonClick = (viewMode: TViewMode) => {
-		setViewMode(viewMode)
+	const handleViewButtonClick = (viewModeArg: TViewMode) => {
+		dispatch(setViewMode(viewModeArg))
 	}
 
 	return (

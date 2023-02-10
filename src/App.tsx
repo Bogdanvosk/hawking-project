@@ -1,7 +1,11 @@
 import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom'
-import { News, NewsItem, Contacts, Auth, Catalog } from './pages/'
+import { News, NewsItem, Contacts, Auth, Catalog, MainPage } from './pages/'
 
 const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <MainPage />
+	},
 	{
 		path: '/news',
 		element: <News itemsPerPage={5} />,

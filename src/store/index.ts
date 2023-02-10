@@ -1,16 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit'
 import newsSlice from './features/news/newsSlice'
-import logger from 'redux-logger'
+import flatsSlice from './features/catalog/flatsSlice'
+// import logger from 'redux-logger'
 
 import thunkMiddleware from 'redux-thunk'
 
-export const store = configureStore({
-	reducer: {
-		news: newsSlice
-	},
-	middleware: [thunkMiddleware, logger]
-})
+export const setupStore = () => {
+	return configureStore({
+		reducer: {
+			news: newsSlice,
+			flats: flatsSlice
+		},
+		middleware: getDefaultMiddleware =>
+			getDefaultMiddleware().concat(thunkMiddleware)
+	})
+}
+
+export const store = setupStore()
 
 export type RootState = ReturnType<typeof store.getState>
-
-export type AppDispatch = typeof store.dispatch
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore['dispatch']

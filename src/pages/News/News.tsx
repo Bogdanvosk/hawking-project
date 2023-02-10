@@ -1,81 +1,58 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
-import {
-	Breadcrumbs,
-	Cards,
-	Container,
-	Layout,
-	Search,
-	Title,
-	Pagination
-} from '../../components'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { Breadcrumbs, Cards, Container, Layout, Pagination, Search, Title } from '../../components'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
 import { RootState } from '../../store'
-import { fetchNews, getNews } from '../../store/features/news/newsSlice'
+import { fetchNews, searchNews } from '../../store/features/news/newsSlice'
 import { TComponentWithPagination } from '../../types'
 
 import styles from './News.module.scss'
+import { usePagination } from "../../utils/usePagination";
+import Skeleton from './Skeleton/Skeleton'
 
 const News = ({ itemsPerPage }: TComponentWithPagination) => {
 	let [searchParams, setSearchParams] = useSearchParams()
 
-	const { news } = useAppSelector((state: RootState) => state.news)
+	const { news, isLoading, error } = useAppSelector((state: RootState) => state.news)
 	const dispatch = useAppDispatch()
 
-	// const [news, setNews] = useState<TCard[]>([])
-	const [searchParam, setSearchParam] = useState<string>('')
+	const [searchParam, setSearchParam] = useState<string | null>('')
 
 	useEffect(() => {
-		const paramValue = searchParams.get('search')
+		const paramValue = searchParams.get('q')
+		if (paramValue !== null) setSearchParam(paramValue)
 
-		if (paramValue) {
-			setSearchParam(paramValue)
-		}
-
-		getNews(dispatch<any>(fetchNews()))
+		dispatch<any>(fetchNews())
 	}, [])
 
-	// useEffect(() => {
-	// 	axios
-	// 		.get(`http://localhost:3000/news?q=${searchParam}`)
-	// 		.then(({ data }) => setNews(data))
+	useEffect(() => {
+		setSearchParams(`q=${searchParam}`)
 
-	// 	setSearchParams(`search=${searchParam}`)
-	// }, [searchParam])
+		dispatch<any>(searchNews(searchParam))
+	}, [searchParam])
 
-	const [itemOffset, setItemOffset] = useState(0)
-
-	if (news.length < itemsPerPage) itemsPerPage = news.length
-
-	const endOffset = itemOffset + itemsPerPage
-	const currentNews = news.slice(itemOffset, endOffset)
-	const pageCount = Math.ceil(news.length / itemsPerPage)
-
-	const handlePageClick = (event: { selected: number }) => {
-		const newOffset = (event.selected * itemsPerPage) % news.length
-		setItemOffset(newOffset)
-
-		executeScroll()
-	}
-
-	const executeScroll = () =>
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
-		})
+	const { currentItems, pageCount, handlePageClick } = usePagination(itemsPerPage, news)
 
 	return (
 		<Layout>
 			<div className={styles.news}>
 				<Container>
-					<Breadcrumbs />
+					<Breadcrumbs/>
 					<div className={styles.newsHead}>
 						<Title size={30}>Новости</Title>
-						<Search setSearchParam={setSearchParam} />
+						<Search setSearchParam={setSearchParam}/>
 					</div>
-					<Cards news={currentNews} />
+					{(isLoading && !error && <div className={styles.skeletonCards}>
+							{Array(9).fill(0).map((_, idx) => {
+								return (
+									<Skeleton key={idx}/>
+								)
+							})}
+						</div>
+					)}
+					{!error && currentItems && <Cards news={currentItems}/>}
+					{currentItems.length === 0 && !error && <h2 className={styles.notFound}>Упс, ничего не найдено!</h2>}
+					{error && <h2 className={styles.error}>Упс, произошла ошибка!</h2>}
 					<Pagination
 						pageCount={pageCount}
 						handlePageClick={handlePageClick}

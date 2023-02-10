@@ -4,7 +4,6 @@
 	}
 
 	&Label {
-		// margin-top: 20px;
 		cursor: pointer;
 		background: #ffffff;
 		box-shadow: 0px 5px 20px rgba(0, 96, 206, 0.1);
@@ -15,12 +14,16 @@
 		gap: 3.875rem;
 
 		.sortIcon {
-			vertical-align: middle;
-
 			g,
 			path {
 				transition: all 0.3s;
 			}
+		}
+
+		.left {
+			display: flex;
+			align-items: center;
+			gap: 0.625rem;
 		}
 
 		span {
@@ -28,8 +31,6 @@
 			font-size: 0.875rem;
 			line-height: 1.0625rem;
 			color: #1e2123;
-			vertical-align: middle;
-			margin-left: 0.625rem;
 		}
 
 		.sortArrow {

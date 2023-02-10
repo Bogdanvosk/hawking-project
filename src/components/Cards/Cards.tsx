@@ -3,11 +3,7 @@ import { Card } from '../'
 
 import styles from './Cards.module.scss'
 
-type TCardsProps = {
-	news: TCard[] | undefined
-}
-
-const Cards = ({ news }: TCardsProps) => {
+const Cards = ({ news }: { news: TCard[] }) => {
 	return (
 		<div className={styles.cards}>
 			{news && news.map(card => {

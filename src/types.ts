@@ -1,15 +1,5 @@
 import React from 'react'
 
-interface HeaderListItem {
-	id: number
-	listNumber: number
-	text: string
-	icon?: React.ReactElement
-	frontIcon?: boolean
-}
-
-export type HeaderList = HeaderListItem[]
-
 export type TTitle = {
 	size: number
 	children: React.ReactNode
@@ -73,3 +63,31 @@ export type TPaginationProps = {
 }
 
 export type TViewMode = 'Список' | 'Плитки'
+
+export type TSortType = 'По умолчанию' | 'По цене' | 'По количеству комнат'
+
+export type TFilter = '1 комн.' | '2 комн.' | '3 комн.' | '4 комн.' | '5 комн.'
+
+export type TSubway =
+	| 'Грушевка'
+	| 'Московская'
+	| 'Нью-Йоркская'
+	| 'Крутецкая'
+	| 'Смешная'
+	| 'Позорная'
+
+export type TDistrict =
+	| 'Шабаны'
+	| 'Октябрьский'
+	| 'Приморский'
+	| 'Заморский'
+	| 'Глухой'
+	| 'Далеко'
+
+export type TFilterObj = {
+	rooms: number | null
+	price: [number, number] | null
+	bedrooms: number | null
+	district: TDistrict | null
+	subway: TSubway | null
+}

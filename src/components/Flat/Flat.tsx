@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { TFlatProps, TViewMode } from '../../types'
 
 import styles from './Flat.module.scss'
+import { useAppSelector } from '../../store/hooks/hooks'
 
 const Flat = ({
 	img,
@@ -13,9 +14,7 @@ const Flat = ({
 	stuff
 }: TFlatProps) => {
 	const [contactsIsOpen, setContactsIsOpen] = useState(false)
-
-	// УБРАТЬ
-	const viewMode: TViewMode = 'Список'
+	const { viewMode } = useAppSelector(({ flats }) => flats)
 
 	const ref = useRef(null)
 
@@ -33,7 +32,10 @@ const Flat = ({
 				viewMode === 'Список' ? styles.wideCard : null
 			} `}>
 			{viewMode === 'Плитки' && <span className={styles.gold}>Gold</span>}
-			<div className={styles.slider}>
+			<div
+				className={`${
+					viewMode === 'Список' ? styles.listSlider : styles.slider
+				}`}>
 				<img src={img} alt='Flat' />
 			</div>
 			<div className={styles.content}>
@@ -148,9 +150,7 @@ const Flat = ({
 							viewMode === 'Список' ? styles.wide : null
 						}`}>
 						<div className={styles.addToFav}>
-							{viewMode === 'Список' && (
-								<span>В закладки</span>
-							)}
+							{viewMode === 'Список' && <span>В закладки</span>}
 							<svg
 								height='15px'
 								width='15px'

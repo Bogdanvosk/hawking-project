@@ -1,51 +1,35 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {
 	Breadcrumbs,
 	Container,
 	Layout,
-	Flat,
 	Pagination,
-	Sort,
 	Flats,
-	ViewButtons
+	ViewButtons,
+	Select,
+	Filter
 } from '../../components'
-import { TComponentWithPagination, TFlatProps, TViewMode } from '../../types'
+import { TComponentWithPagination } from '../../types'
 
 import styles from './Catalog.module.scss'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
+import { usePagination } from '../../utils/usePagination'
+import { fetchFlats } from '../../store/features/catalog/flatsSlice'
+import Skeleton from './Skeleton/Skeleton'
 
 const Catalog = ({ itemsPerPage }: TComponentWithPagination) => {
-	// todo: РАЗБИТЬ НА КОМПОНЕНТЫ
-	const [flats, setFlats] = useState<TFlatProps[]>([])
+	const { flats, error, isLoading, viewMode } = useAppSelector(
+		({ flats }) => flats
+	)
+	const dispatch = useAppDispatch()
 
-	// todo: УБРАТЬ
-	const viewMode: TViewMode = 'Список'
-
-	const [itemOffset, setItemOffset] = useState(0)
-
-	if (flats.length < itemsPerPage) itemsPerPage = flats.length
-
-	const endOffset = itemOffset + itemsPerPage
-	const currentFlats = flats.slice(itemOffset, endOffset)
-	const pageCount = Math.ceil(flats.length / itemsPerPage)
-
-	const handlePageClick = (event: { selected: number }) => {
-		const newOffset = (event.selected * itemsPerPage) % flats.length
-		setItemOffset(newOffset)
-
-		executeScroll()
-	}
-
-	const executeScroll = () =>
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
-		})
+	const { currentItems, handlePageClick, pageCount } = usePagination(
+		itemsPerPage,
+		flats
+	)
 
 	useEffect(() => {
-		axios
-			.get('http://localhost:3000/flats')
-			.then(({ data }) => setFlats(data))
+		dispatch(fetchFlats())
 	}, [])
 
 	return (
@@ -63,9 +47,23 @@ const Catalog = ({ itemsPerPage }: TComponentWithPagination) => {
 					</div>
 				</Container>
 			</div>
-			<Container>
+			<div className={styles.filter}>
+				<Container width={100}>
+					<Filter />
+				</Container>
+			</div>
+
+			<Container width={100}>
 				<div className={styles.sortContainer}>
-					<Sort />
+					<Select
+						key='sort'
+						items={[
+							'По умолчанию',
+							'По цене',
+							'По количеству комнат'
+						]}
+						withIcon
+					/>
 					<ViewButtons />
 				</div>
 			</Container>
@@ -77,7 +75,21 @@ const Catalog = ({ itemsPerPage }: TComponentWithPagination) => {
 					<h2 className={styles.found}>
 						Найдено {flats.length} квартир
 					</h2>
-					<Flats flats={currentFlats} />
+					{isLoading && !error && (
+						<div className={styles.skeletonCards}>
+							{Array(9)
+								.fill(0)
+								.map((_, idx) => {
+									return <Skeleton key={idx} />
+								})}
+						</div>
+					)}
+					{!error && currentItems && (
+						<Flats flats={currentItems} viewMode={viewMode} />
+					)}
+					{error && (
+						<h2 className={styles.error}>Упс, произошла ошибка!</h2>
+					)}
 					<div className={styles.row}>
 						<Pagination
 							pageCount={pageCount}

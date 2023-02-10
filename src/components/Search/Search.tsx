@@ -16,8 +16,6 @@ const Search = ({
 		e.preventDefault()
 
 		setSearchParam(input)
-
-		// setInput('')
 	}
 
 	return (
